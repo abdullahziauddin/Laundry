@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>İstanbul Express Laundry</title>
+    <style>
+        :root {
+            --primary: #0066ff;
+            --primary-dark: #0047b3;
+            --bg: #f5f7fb;
+            --card: #ffffff;
+            --text: #1f2933;
+            --muted: #6b7280;
+            --accent: #22c55e;
+            --border: #e5e7eb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 20px 16px 40px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 0.03em;
+        }
+
+        .nav-contact {
+            font-size: 0.9rem;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .nav-contact span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+            gap: 32px;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: #e5e7eb;
+            margin-bottom: 18px;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero-cta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .btn {
+            border-radius: 999px;
+            padding: 10px 18px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+        }
+
+        .btn-primary {
+            background: #25d366;
+            color: #fff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            background: #1ebe5c;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+
+        .hero-note {
+            font-size: 0.85rem;
+            color: #e5e7eb;
+        }
+
+        .hero-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            color: #111827;
+        }
+
+        .hero-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .hero-card p {
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 10px;
+        }
+
+        .hero-card-list {
+            list-style: none;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-card-list li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .hero-card-footer {
+            font-size: 0.8rem;
+            color: #6b7280;
+            border-top: 1px dashed #e5e7eb;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+
+        main {
+            margin-top: -24px;
+            padding-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .section {
+            margin-top: 32px;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 10px;
+        }
+
+        .services {
+            background: var(--card);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(15,23,42,0.06);
+            border: 1px solid var(--border);
+        }
+
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .service-card {
+            background: #f9fafb;
+            border-radius: 14px;
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 6px;
+        }
+
+        .service-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .service-meta {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .service-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 4px;
+        }
+
+        .service-price {
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .btn-xs {
+            padding: 6px 10px;
+            font-size: 0.8rem;
+        }
+
+        .cart {
+            background: var(--card);
+            border-radius: 18px;
+            padding: 16px;
+            box-shadow: 0 10px 25px rgba(15,23,42,0.06);
+            border: 1px solid var(--border);
+            position: sticky;
+            top: 12px;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .cart-header h2 {
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .cart-empty {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .cart-items {
+            list-style: none;
+            margin-top: 8px;
+            margin-bottom: 12px;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            padding: 6px 0;
+            border-bottom: 1px dashed #e5e7eb;
+            gap: 8px;
+        }
+
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+        }
+
+        .cart-item-qty {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .cart-qty-btn {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            border: 1px solid #e5e7eb;
+            background: #f9fafb;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .cart-remove {
+            border: none;
+            background: transparent;
+            color: #ef4444;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .cart-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 8px;
+            margin-top: 8px;
+            font-size: 0.9rem;
+        }
+
+        .cart-summary strong {
+            font-size: 1rem;
+        }
+
+        .cart-note {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-top: 6px;
+            margin-bottom: 10px;
+        }
+
+        .cart-input {
+            width: 100%;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            padding: 8px 10px;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .cart-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .btn-whatsapp {
+            width: 100%;
+            justify-content: center;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            padding: 9px 14px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: #25d366;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.1s ease, transform 0.1s ease;
+        }
+
+        .btn-whatsapp:hover {
+            background: #1ebe5c;
+            transform: translateY(-1px);
+        }
+
+        .badge-small {
+            font-size: 0.7rem;
+            color: #16a34a;
+        }
+
+        .how-it-works {
+            margin-top: 16px;
+            font-size: 0.9rem;
+        }
+
+        .how-it-works ol {
+            padding-left: 18px;
+            color: #4b5563;
+        }
+
+        .how-it-works li {
+            margin-bottom: 4px;
+        }
+
+        footer {
+            border-top: 1px solid #e5e7eb;
+            padding: 16px;
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-align: center;
+            background: #f9fafb;
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-card {
+                margin-top: 10px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 16px 16px 32px;
+            }
+
+            .hero-title {
+                font-size: 1.7rem;
+            }
+
+            .nav {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <nav class="nav">
+            <div class="logo">İstanbul Express Laundry</div>
+            <div class="nav-contact">
+                <span>📍 İstanbul, Avrupa Yakası</span>
+                <span>📲 WhatsApp: <strong>+90 5355514039</strong></span>
+            </div>
+        </nav>
+
+        <div class="hero">
+            <div>
+                <h1 class="hero-title">Çamaşırlarını WhatsApp’tan Gönder, İstanbul’da Kapından Alalım.</h1>
+                <p class="hero-subtitle">
+                    Aynı gün kapıdan alım, profesyonel yıkama ve ütüleme. Sepetine ekle, WhatsApp’tan gönder, gerisini biz halledelim.
+                </p>
+                <div class="hero-badges">
+                    <span class="badge">⚡ Aynı gün veya ertesi gün teslim</span>
+                    <span class="badge">🧺 Kg & adet bazlı fiyatlandırma</span>
+                    <span class="badge">📦 Kapıdan alım & teslimat</span>
+                </div>
+                <div class="hero-cta">
+                    <button class="btn btn-primary" onclick="scrollToServices()">Hizmetleri Gör ve Sepete Ekle</button>
+                    <button class="btn btn-outline" onclick="scrollToCart()">Sepeti Görüntüle</button>
+                </div>
+                <p class="hero-note">Ödemeyi kapıda nakit veya kart ile yapabilirsin.</p>
+            </div>
+
+            <div class="hero-card">
+                <h3>İstanbul’da Hızlı Çamaşır Servisi</h3>
+                <p>
+                    Yoğun musun? Çamaşır, ütü, kuru temizleme ile uğraşma.
+                    Tek yapman gereken sepetini doldurup WhatsApp’tan göndermek.
+                </p>
+                <ul class="hero-card-list">
+                    <li>✅ Minimum sepet: 150₺</li>
+                    <li>✅ Avrupa Yakası seçili semtlerde kapıdan alım</li>
+                    <li>✅ Ortalama teslim süresi: 24–48 saat</li>
+                </ul>
+                <div class="hero-card-footer">
+                    Not: Fiyatlar örnektir. Kendi semt ve kampanyalarına göre güncelleyebilirsin.
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="grid">
+            <!-- Left side: services -->
+            <section class="section">
+                <div id="services"></div>
+                <h2 class="section-title">Hizmetler ve Fiyatlar</h2>
+                <p class="section-subtitle">
+                    Aşağıdan ihtiyacına uygun hizmetleri seç, adet/kg ekle ve siparişini WhatsApp’tan gönder.
+                </p>
+
+                <div class="services">
+                    <div class="services-list" id="services-list">
+                        <!-- JS will fill services here -->
+                    </div>
+                </div>
+
+                <div class="how-it-works">
+                    <h3 style="font-size:1rem; font-weight:700; margin-bottom:6px;">Nasıl Çalışır?</h3>
+                    <ol>
+                        <li>Hizmetleri seç ve sepete ekle.</li>
+                        <li>Adres ve talimatlarını yaz.</li>
+                        <li>"WhatsApp’tan Sipariş Ver" butonuna tıkla.</li>
+                        <li>Mesaj otomatik oluşturulur, gönder ve onay al.</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Right side: cart -->
+            <aside class="section">
+                <div id="cart"></div>
+                <div class="cart">
+                    <div class="cart-header">
+                        <h2>Sepetin</h2>
+                        <span class="badge-small">WhatsApp Siparişi</span>
+                    </div>
+                    <div id="cart-content">
+                        <p class="cart-empty">Henüz ürün eklemedin. Soldan hizmet seçerek sepete ekleyebilirsin.</p>
+                    </div>
+
+                    <div id="cart-summary-wrapper" style="display:none;">
+                        <div class="cart-summary">
+                            <span>Toplam</span>
+                            <strong id="cart-total">0₺</strong>
+                        </div>
+                    </div>
+
+                    <p class="cart-note">
+                        Not: Fiyatlar tahmini. Kesin tutar, çamaşırların ağırlığı ve durumuna göre teslimat sırasında netleştirilir.
+                    </p>
+
+                    <input
+                        type="text"
+                        id="cart-name"
+                        class="cart-input"
+                        placeholder="Ad Soyad"
+                    />
+                    <input
+                        type="text"
+                        id="cart-address"
+                        class="cart-input"
+                        placeholder="Adres (Mahalle, Sokak, Bina, Daire)"
+                    />
+                    <input
+                        type="text"
+                        id="cart-notes"
+                        class="cart-input"
+                        placeholder="Not (tercih edilen saat, özel talimat vb.)"
+                    />
+
+                    <div class="cart-footer">
+                        <button class="btn-whatsapp" onclick="sendWhatsAppOrder()">
+                            <span>📲 WhatsApp’tan Sipariş Ver</span>
+                        </button>
+                        <button class="cart-remove" onclick="clearCart()">Sepeti Temizle</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</main>
+
+<footer>
+    İstanbul Express Laundry · İstanbul / Türkiye · WhatsApp: +90 535 551 40 39 · Çalışma Saatleri: 09:00 – 22:00
+</footer>
+
+<script>
+    // ---------- CONFIGURABLE AREA ----------
+    // Buraya kendi WhatsApp numaranı gir (sadece rakam, + işareti yok).
+    // Örnek: 905551112233
+    const WHATSAPP_NUMBER = "905355514039";
+
+    // Hizmet listesi – fiyatları ve isimleri kendine göre düzenleyebilirsin
+    const services = [
+        {
+            id: 1,
+            name: "Çamaşır Yıkama (Kg)",
+            description: "Karışık günlük çamaşır, katlama dahil",
+            price: 60,
+            unit: "kg"
+        },
+        {
+            id: 2,
+            name: "Gömlek Yıkama + Ütü",
+            description: "Beyaz ve renkli gömlekler",
+            price: 40,
+            unit: "adet"
+        },
+        {
+            id: 3,
+            name: "Pantolon Yıkama + Ütü",
+            description: "Kumaş ve günlük pantolonlar",
+            price: 45,
+            unit: "adet"
+        },
+        {
+            id: 4,
+            name: "Nevresim Takımı",
+            description: "Nevresim + çarşaf + 2 yastık kılıfı",
+            price: 120,
+            unit: "takım"
+        },
+        {
+            id: 5,
+            name: "Kuru Temizleme – Ceket",
+            description: "Takım elbise ceketi",
+            price: 150,
+            unit: "adet"
+        },
+        {
+            id: 6,
+            name: "Sadece Ütü (Karışık)",
+            description: "Ütü yapılacak karışık kıyafetler",
+            price: 50,
+            unit: "kg"
+        }
+    ];
+
+    // --------- CART STATE ----------
+    let cart = [];
+
+    function renderServices() {
+        const container = document.getElementById("services-list");
+        container.innerHTML = "";
+
+        services.forEach(service => {
+            const card = document.createElement("div");
+            card.className = "service-card";
+
+            card.innerHTML = `
+                <div>
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-meta">${service.description}</div>
+                </div>
+                <div class="service-bottom">
+                    <div class="service-price">${service.price}₺ / ${service.unit}</div>
+                    <button class="btn btn-primary btn-xs" onclick="addToCart(${service.id})">
+                        Sepete Ekle
+                    </button>
+                </div>
+            `;
+
+            container.appendChild(card);
+        });
+    }
+
+    function renderCart() {
+        const cartContent = document.getElementById("cart-content");
+        const summaryWrapper = document.getElementById("cart-summary-wrapper");
+        const totalEl = document.getElementById("cart-total");
+
+        if (cart.length === 0) {
+            cartContent.innerHTML = `<p class="cart-empty">Henüz ürün eklemedin. Soldan hizmet seçerek sepete ekleyebilirsin.</p>`;
+            summaryWrapper.style.display = "none";
+            totalEl.textContent = "0₺";
+            return;
+        }
+
+        let html = `<ul class="cart-items">`;
+        let total = 0;
+
+        cart.forEach(item => {
+            const lineTotal = item.price * item.quantity;
+            total += lineTotal;
+
+            html += `
+                <li class="cart-item">
+                    <div class="cart-item-info">
+                        <span class="cart-item-title">${item.name}</span>
+                        <span class="cart-item-qty">${item.quantity} ${item.unit} × ${item.price}₺</span>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="cart-qty-btn" onclick="changeQuantity(${item.id}, -1)">−</button>
+                        <span style="font-size:0.8rem; min-width:16px; text-align:center;">${item.quantity}</span>
+                        <button class="cart-qty-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
+                        <button class="cart-remove" onclick="removeFromCart(${item.id})">sil</button>
+                    </div>
+                </li>
+            `;
+        });
+
+        html += `</ul>`;
+        cartContent.innerHTML = html;
+
+        summaryWrapper.style.display = "block";
+        totalEl.textContent = total + "₺";
+    }
+
+    function addToCart(serviceId) {
+        const service = services.find(s => s.id === serviceId);
+        if (!service) return;
+
+        const existing = cart.find(item => item.id === serviceId);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cart.push({
+                id: service.id,
+                name: service.name,
+                price: service.price,
+                unit: service.unit,
+                quantity: 1
+            });
+        }
+        renderCart();
+    }
+
+    function changeQuantity(serviceId, delta) {
+        const item = cart.find(i => i.id === serviceId);
+        if (!item) return;
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            cart = cart.filter(i => i.id !== serviceId);
+        }
+        renderCart();
+    }
+
+    function removeFromCart(serviceId) {
+        cart = cart.filter(i => i.id !== serviceId);
+        renderCart();
+    }
+
+    function clearCart() {
+        cart = [];
+        renderCart();
+    }
+
+    function sendWhatsAppOrder() {
+        if (cart.length === 0) {
+            alert("Sepetin boş. Önce hizmet ekle.");
+            return;
+        }
+
+        const name = document.getElementById("cart-name").value.trim();
+        const address = document.getElementById("cart-address").value.trim();
+        const notes = document.getElementById("cart-notes").value.trim();
+
+        let message = "Merhaba, İstanbul Express Laundry üzerinden sipariş oluşturmak istiyorum.%0A%0A";
+
+        if (name) {
+            message += `Ad Soyad: ${name}%0A`;
+        }
+        if (address) {
+            message += `Adres: ${address}%0A`;
+        }
+        if (notes) {
+            message += `Not: ${notes}%0A`;
+        }
+
+        message += "%0ASipariş Detayı:%0A";
+
+        let total = 0;
+        cart.forEach(item => {
+            const lineTotal = item.price * item.quantity;
+            total += lineTotal;
+            message += `- ${item.name} (${item.quantity} ${item.unit}) = ${lineTotal}₺%0A`;
+        });
+
+        message += `%0ATahmini Toplam: ${total}₺%0A`;
+        message += "%0ALütfen müsait olduğunuzda dönüş yapar mısınız?";
+
+        const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
+        window.open(url, "_blank");
+    }
+
+    function scrollToServices() {
+        document.getElementById("services").scrollIntoView({ behavior: "smooth" });
+    }
+
+    function scrollToCart() {
+        document.getElementById("cart").scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Initialize
+    renderServices();
+    renderCart();
+</script>
+</body>
+</html>
